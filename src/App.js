@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import SignIn from "./components/SignIn/SignIn";
+import AuthGuard from "./components/SignIn/AuthGuard";
+import SideBar from "./components/SideBar/SideBar";
+import Home from "./components/Dashboard/Home";
+import { Switch, Route, withRouter } from "react-router-dom";
+
+const Main = withRouter(({ location }) => {
+  return (
+    <>
+      {location.pathname !== "/signin" && (
+        <>
+          <SideBar />
+        </>
+      )}
+      <Switch>
+        <AuthGuard exact path="/" component={Home} />
+        <Route path="/signin" component={SignIn} />
+      </Switch>
+    </>
+  );
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Main />
     </div>
   );
 }
-
 export default App;
