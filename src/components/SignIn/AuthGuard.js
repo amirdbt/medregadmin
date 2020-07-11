@@ -21,7 +21,7 @@ const AuthGuard = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      CheckToken ? (
+      CheckToken() ? (
         <Component {...props} />
       ) : (
         <Redirect
