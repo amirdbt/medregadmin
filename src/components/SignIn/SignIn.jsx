@@ -73,9 +73,9 @@ const SiginIn = () => {
               history.push("/otp-verification");
             })
             .catch((err) => {
-              //   console.log(err.response.data.error);
-              setMessage(err);
-              // setErr(true);
+              console.log(err.response);
+              setMessage("Username or Password is incorrect");
+              setErr(true);
               setLoading(false);
             });
           setSubmitting(false);
