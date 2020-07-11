@@ -134,21 +134,12 @@ const SideBar = (props) => {
             <Typography variant="h5">Dashboard</Typography>
           </ListItem>
         </Link>
-
-        <Link className={classes.link} to="#">
-          <ListItem button className={classes.listItems}>
-            <ListItemIcon className={classes.iconColor}>
-              <AccountCircle />
-            </ListItemIcon>
-            <Typography variant="h5">Profile</Typography>
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to="#">
+        <Link className={classes.link} to="/users">
           <ListItem button className={classes.listItems}>
             <ListItemIcon className={classes.iconColor}>
               <Group />
             </ListItemIcon>
-            <Typography variant="h5">People</Typography>
+            <Typography variant="h5">Users</Typography>
           </ListItem>
         </Link>
         <Link className={classes.link} to="/providers">
@@ -203,10 +194,6 @@ const SideBar = (props) => {
               transformOrigin={{ vertical: "top", horizontal: "right" }}
               elevation={0}
             >
-              <Link to="#" className={classes.link1}>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-              </Link>
-
               <Link to="/signin" className={classes.link1}>
                 <MenuItem onClick={logout}>Log out</MenuItem>
               </Link>

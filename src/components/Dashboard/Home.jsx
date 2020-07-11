@@ -43,8 +43,8 @@ const Home = () => {
         setLoading(false);
       });
   };
-  let nonActiveUsers = users.filter((user) => user.deactivate === false);
-  let aUsers = users.filter((user) => user.deactivate === true);
+  let nonActiveUsers = users.filter((user) => user.deactivate === true);
+  let aUsers = users.filter((user) => user.deactivate === false);
   let activeProviders = providers.filter(
     (provider) => provider.activated === true
   );
