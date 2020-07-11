@@ -3,23 +3,15 @@ import {
   Button,
   Typography,
   TextField,
-  Link,
   LinearProgress,
   makeStyles,
   Avatar,
   CssBaseline,
-  Grid,
   Container,
-  InputAdornment,
-  IconButton,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { Alert } from "@material-ui/lab";
-import {
-  SupervisorAccount,
-  Visibility,
-  VisibilityOff,
-} from "@material-ui/icons";
+import { SupervisorAccount } from "@material-ui/icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -47,49 +39,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SiginIn = () => {
+const OTPVerification = () => {
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
   let history = useHistory();
   const classes = useStyles();
 
   return (
     <Formik
-      initialValues={{ userName: "", password: "" }}
+      initialValues={{ userName: "", OTP: "" }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log("Logging in", values);
+          console.log("OTP  in", values);
           setLoading(true);
           axios
-            .post(`https://polar-dusk-61658.herokuapp.com/admin/login`, values)
+            .post(`https://polar-dusk-61658.herokuapp.com/users/verify`, values)
             .then((res) => {
               console.log(res.data);
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("userName", res.data.user.userName);
 
               setLoading(false);
-              history.push("/otp-verification");
+              history.push("/");
             })
             .catch((err) => {
               //   console.log(err.response.data.error);
               setMessage(err);
-              // setErr(true);
               setLoading(false);
+              setErr(true);
             });
           setSubmitting(false);
         }, 200);
       }}
       validationSchema={Yup.object().shape({
         userName: Yup.string().required("Required"),
-        password: Yup.string()
-          .required("No password provided")
-          .min(8)
-          .matches(
-            /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-            "Password must contain at least 8 characters, one uppercase,one lowercase, one number and one special case character"
-          ),
+        OTP: Yup.string().required("No OTP provided"),
       })}
     >
       {(props) => {
@@ -120,7 +105,7 @@ const SiginIn = () => {
                 MedReg Admin Portal
               </Typography>
               <Typography variant="subtitle1">
-                Sign in to your account to continue
+                Enter your OTP sent to your mobile phone
               </Typography>
 
               <form className={classes.form} onSubmit={handleSubmit}>
@@ -141,38 +126,23 @@ const SiginIn = () => {
                   {errors.userName && touched.userName && (
                     <div className={classes.error}> {errors.userName} </div>
                   )}
-                  <div style={{ marginTop: "20px" }}></div>
+
                   <TextField
-                    name="password"
-                    label="Password *"
-                    fullWidth
-                    type={showPassword ? "text" : "password"}
+                    name="OTP"
+                    label="OTP*"
                     variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    type="text"
                     error={err}
-                    className={errors.password && touched.password && "error"}
-                    // className={classes.text}
-                    value={values.password}
+                    value={values.OTP}
+                    className={errors.OTP && touched.OTP && "error"}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    InputProps={{
-                      // <-- This is where the toggle button is added.
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
                   />
-                  {errors.password && touched.password && (
-                    <div className={classes.error}> {errors.password} </div>
+                  {errors.OTP && touched.OTP && (
+                    <div className={classes.error}> {errors.OTP} </div>
                   )}
-                  <div style={{ marginTop: "10px" }}></div>
 
                   <Button
                     variant="contained"
@@ -182,7 +152,7 @@ const SiginIn = () => {
                     disabled={loading}
                     onClick={handleSubmit}
                   >
-                    Sign in
+                    Verify OTP
                   </Button>
 
                   {loading && (
@@ -193,13 +163,6 @@ const SiginIn = () => {
                   )}
 
                   <div style={{ marginTop: "10px" }}></div>
-                  <Grid container>
-                    <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
-                      </Link>
-                    </Grid>
-                  </Grid>
                 </div>
               </form>
             </div>
@@ -209,4 +172,4 @@ const SiginIn = () => {
     </Formik>
   );
 };
-export default SiginIn;
+export default OTPVerification;

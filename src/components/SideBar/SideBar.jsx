@@ -151,7 +151,7 @@ const SideBar = (props) => {
             <Typography variant="h5">People</Typography>
           </ListItem>
         </Link>
-        <Link className={classes.link} to="#">
+        <Link className={classes.link} to="/providers">
           <ListItem button className={classes.listItems}>
             <ListItemIcon className={classes.iconColor}>
               <LocalHospital />
