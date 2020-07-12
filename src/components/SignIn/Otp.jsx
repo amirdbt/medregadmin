@@ -68,8 +68,8 @@ const OTPVerification = () => {
               history.push("/");
             })
             .catch((err) => {
-              //   console.log(err.response.data.error);
-              setMessage(err);
+              console.log(err.response.data);
+              setMessage(err.response.data);
               setLoading(false);
               setErr(true);
             });
