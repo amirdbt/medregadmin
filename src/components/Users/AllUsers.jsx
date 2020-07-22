@@ -196,7 +196,7 @@ const AllUsers = () => {
 
   const filteredUsers = users.length
     ? users.filter((user) => {
-        return user.lastName.toLowerCase().includes(searchField.toLowerCase());
+        return user.userName.toLowerCase().includes(searchField.toLowerCase());
       })
     : "";
   let activatedUser = users.filter((user) => user.deactivate === false);
@@ -241,7 +241,7 @@ const AllUsers = () => {
           </AppBar>
           <TabPanel value={value} index={0}>
             <SearchBox
-              place="Search By Last Name..."
+              place="Search By Username..."
               searchChange={searchChange}
             />
             <Grid container>
