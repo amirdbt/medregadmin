@@ -166,12 +166,12 @@ const ActiveUsers = ({ users }) => {
   };
   const filteredUsers = users.length
     ? users.filter((user) => {
-        return user.lastName.toLowerCase().includes(searchField.toLowerCase());
+        return user.userName.toLowerCase().includes(searchField.toLowerCase());
       })
     : "";
   return (
     <div>
-      <SearchBox searchChange={searchChange} place="Search By Last Name..." />
+      <SearchBox searchChange={searchChange} place="Search By  Username..." />
       {al ? (
         <>
           <Alert severity={severity}>
